@@ -1,0 +1,143 @@
+entity Pais {
+	nombre String
+}
+
+entity Estado {
+	nombre String
+}
+
+entity Municipio {
+	nombre String
+}
+
+// an ignored comment
+/** not an ignored comment */
+entity Localidad {
+	nombre String
+}
+
+entity Departamento {
+	nombre String required
+}
+
+/**
+ * Task entity.
+ * @author The JHipster team.
+ */
+entity Tarea {
+	titulo String,
+	descripcion String
+}
+
+/**
+ * The Employee entity.
+ */
+entity Empleado {
+	/**
+	* The firstname attribute.
+	*/
+	nombres String,
+	apellidos String,
+	correo String,
+	telefono String,
+	fechaDeContratacion Instant,
+	salario Long
+}
+
+entity Trabajo {
+	titulo String,
+	salarioMinimo Long,
+	salarioMaximo Long
+}
+
+entity HistorialDeTrabajo {
+	fechaInicio Instant,
+	fechafin Instant
+}
+
+entity Sede {
+	nombre String
+    ubicacion String
+}
+
+entity TipoPersona{
+	nombre String	
+}
+
+entity Persona{
+	cedula String
+	nombres String
+    apellidos String
+    correo String
+    telefono String
+}
+
+
+entity Marca{
+	nombre String
+}
+
+entity Modelo{
+	nombre String
+    precio Double
+}
+
+entity Automovil{
+	nombre String
+    placa String
+    fechaFabricacion LocalDate
+    lugarFabricacion String
+    numeroCilindros Integer
+    numeroPuertas Integer
+    color String
+    peso Double
+    capacidad Double
+    opciones String
+    kilometraje Double
+}
+
+entity Proveedor{
+	nombre String
+}
+
+entity Venta {
+}
+
+relationship ManyToOne {
+	Modelo{marca(nombre)} to Marca
+    Automovil{modelo(nombre)} to Modelo
+    Automovil{proveedor(nombre)} to Proveedor
+    Venta{automovil(placa)} to Automovil
+    Persona{tipo(nombre)} to TipoPersona
+    Venta{vendedor(firstName)} to Empleado
+    Venta{comprador(nombres)} to Persona
+    Venta{sede(nombre)} to Sede
+    Departamento{localidad(nombre)} to Localidad
+    Localidad{municipio(nombre)} to Municipio
+    Municipio{estado(nombre)} to Estado
+    Estado{pais(nombre)} to Pais
+    Trabajo{tarea(nombre)} to Tarea
+    HistorialDeTrabajo{trabajo} to Trabajo,
+	HistorialDeTrabajo{departamento} to Departamento,
+	HistorialDeTrabajo{empleado} to Empleado
+}
+
+
+
+relationship ManyToOne {
+	Empleado{manager} to Empleado
+}
+
+
+
+// Set pagination options
+paginate * with pagination
+
+// Use Data Transfert Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+//service all with serviceImpl except Employee, Job
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
